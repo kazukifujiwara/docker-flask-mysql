@@ -1,4 +1,3 @@
-import MySQLdb
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -7,11 +6,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-
-    # conn = MySQLdb.connect(user='root', passwd='root', host='app_mysql', db='testdb')
-    # cur = conn.cursor()
-    # sql = "select * test;"
-    # cur.execute(sql)
 
     return render_template('index.html',
         title='Flask Index',
