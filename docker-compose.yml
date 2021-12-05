@@ -11,6 +11,8 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=test
       - MYSQL_PASSWORD=test
+      - BIND-ADDRESS=0.0.0.0
+    tty: true
     networks:
       - app_net
 
