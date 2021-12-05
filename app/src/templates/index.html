@@ -15,7 +15,20 @@ Flask Tutorial
     <ul>
         <li>test1</li>
         <li>test2</li>
+        <li><a href="/create">register</a></li>
     </ul>
+</div>
+<div>
+    <h1>Table: posts</h1>
+    {% for post in posts %}
+    <article>
+        <h2>{{ post.title }}</h2>
+        <a href="/{{post.id}}/update" role="button">edit</a>
+        <a href="/{{post.id}}/delete" role="button">delete</a>
+        <p>created at: {{ post.created_at }}</p>
+        <p>{{ post.body }}</p>
+    </article>
+    {% endfor %}
 </div>
 {% endblock %} 
 

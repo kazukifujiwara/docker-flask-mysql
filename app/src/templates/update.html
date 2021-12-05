@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flask Tutorial
+{% endblock %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>Edit</h1>
+<form method="POST">
+    <label for="title">title</label>
+    <input type="text" name="title" value={{ post.title }}>
+    <label for="body">content</label>
+    <input type="text" name="body" value={{ post.body }}>
+    <input type="submit" value="update">
+</form>
+{% endblock %} 
+
+{% block footer %}
+copyright 2021 Kazuki Fujiwara
+{% endblock %} 

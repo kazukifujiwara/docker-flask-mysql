@@ -72,6 +72,24 @@ True
 [(1, 'test1'), (2, 'test2'), (3, 'test3')]
 ```
 
+## Create DB
+
+対話モードで作成。init.sqlに書こうかな。。。
+
+```
+% docker exec -it app_flask /bin/bash
+root@7f3690fb100b:/app# python
+Python 3.9.7 (default, Oct 12 2021, 02:54:29) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+>>> from app import db
+/usr/local/lib/python3.9/site-packages/flask_sqlalchemy/__init__.py:872: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
+  warnings.warn(FSADeprecationWarning(
+>>> db.create_all()
+```
+
+
 ## Notice 
 
 * mysql内のmy.cnf にて認証方式の変更を行った。
@@ -89,3 +107,4 @@ True
 * [DockerでMySQL8.0の環境構築 & 認証方式変更](https://www.wakuwakubank.com/posts/596-mysql-8-with-docker/)
     * my.cnf の設定を変更した。
 * [【docker】db:createすると、Plugin caching_sha2_password could not be loaded...のエラーハマった話](https://qiita.com/tomo-IR/items/224d33f14561e759dd16)
+* [Flaskで簡易ブログアプリの作成！データベース操作も~Flask超入門 vol.2~](https://www.youtube.com/watch?v=mW0_60SRr3s)
