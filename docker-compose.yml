@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    build: ./mysql/
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/db:/var/lib/mysql
+    image: app_mysql
+    container_name: "app_mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+    networks:
+      - app_net
+
+  app:
+    build: ./app
+    volumes:
+      - ./app/src:/app
+      - socket:/tmp
+    container_name: "app_flask"
+    command: uwsgi --ini /app/app.ini
+    depends_on:  # appサーバーはdbサーバーが立ってから起動
+      - db
+    networks:  # appとdbを接続するための共通ネットワーク指定
+      - app_net
+
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/conf.d/default.conf
+      - socket:/tmp
+    container_name: "app_nginx"
+    depends_on:
+      - app
+
+volumes:
+  socket:
+
+networks:
+  app_net:
+    driver: bridge
