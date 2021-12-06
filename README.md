@@ -99,7 +99,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ## TODO
 
-* Flask-loginでログイン機能を実装する
+* Flask-loginでログイン機能の改善
+    * ログイン失敗時の処理
 
 ## Referenece
 

@@ -11,20 +11,17 @@ Flask Tutorial
 {% block content %}
 <p>{{ message }}</p>
 <div>
-    <h1>Home</h1>
-    <ul>
-        <li>test1</li>
-        <li>test2</li>
-        <li><a href="/create">register</a></li>
-    </ul>
+    <h1>Index</h1>
+    <a href="/create" role="button">Register</a>
+    <a href="/logout" role="button">Log Out</a>
 </div>
 <div>
     <h1>Table: posts</h1>
     {% for post in posts %}
     <article>
         <h2>{{ post.title }}</h2>
-        <a href="/{{post.id}}/update" role="button">edit</a>
-        <a href="/{{post.id}}/delete" role="button">delete</a>
+        <a href="/{{post.id}}/update" role="button">Edit</a>
+        <a href="/{{post.id}}/delete" role="button">Delete</a>
         <p>created at: {{ post.created_at }}</p>
         <p>{{ post.body }}</p>
     </article>

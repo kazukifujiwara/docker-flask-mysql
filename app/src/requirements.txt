@@ -9,3 +9,4 @@ ruamel.yaml==0.17.17
 SQLAlchemy==1.4.27
 textfsm==1.1.2
 uWSGI==2.0.19.1
+Werkzeug==2.0.2
