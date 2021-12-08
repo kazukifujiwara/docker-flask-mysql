@@ -5,12 +5,10 @@
 ```
 (app_nginx) -- (app_flask) -- (app_mysql)
 
-% docker-compose ps   
-  Name                 Command               State          Ports       
-------------------------------------------------------------------------
-app_flask   uwsgi --ini /app/app.ini         Up                         
-app_mysql   docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp
-app_nginx   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:80->80/tcp 
+IMAGE                    COMMAND                  PORTS                 NAMES
+nginx:latest             "/docker-entrypoint.…"   0.0.0.0:80->80/tcp    app_nginx
+docker-flask-mysql_app   "uwsgi --ini /app/ap…"                         app_flask
+app_mysql                "docker-entrypoint.s…"   3306/tcp, 33060/tcp   app_mysql
 ```
 
 ## Component
@@ -101,6 +99,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 * Flask-loginでログイン機能の改善
     * ログイン失敗時の処理
+    * adminユーザフラグの追加
+* 右上にユーザ設定メニューを作る
+* DatabaseのCRUD操作をAPI経由で実行可能にする
 
 ## Referenece
 

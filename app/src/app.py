@@ -37,6 +37,10 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect('/login')
+
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -129,6 +133,28 @@ def delete(id):
     db.session.delete(post)
     db.session.commit()
     return redirect('/')
+
+@app.route('/admin/users', methods=['GET', 'POST'])
+@login_required
+def users():
+    if request.method == 'GET':
+        users = User.query.all()
+        return render_template('users.html',
+            title='Flask Index',
+            message='Users (admin)',
+            users=users
+        )
+    if request.method == 'POST':
+        # TODO: implement here.
+        pass
+
+@app.route('/forbidden_access', methods=['GET'])
+def forbidden_access():
+    if request.method == 'GET':
+        return render_template('forbidden_access.html',
+            title='Flask Index',
+            message=''
+        )
 
 # Main function is called only when executing ”python app.py”
 if __name__ == '__main__':
