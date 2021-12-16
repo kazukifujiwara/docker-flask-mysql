@@ -96,6 +96,22 @@ def logout():
     logout_user()
     return redirect('/login')
 
+@app.route('/edit_user', methods=['GET', 'POST'])
+def edit_user():
+    if request.method == 'GET':
+        # user = User.query.filter_by(username=username).first()
+        return render_template('edit_user.html',
+            title='Edit User',
+            message=f'Edit user: {current_user.username}',
+            user=current_user
+        )
+    else:
+        user = User.query.filter_by(username=current_user.username).first()
+        password = request.form.get('password')
+        user.password = generate_password_hash(password, method='sha256')
+        db.session.commit()
+        return redirect('/')
+
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -109,7 +125,8 @@ def create():
     else:
         return render_template('create.html',
             title='Flask MySQL',
-            message='register'
+            message='register',
+            user=current_user
         )
 
 @app.route('/<int:id>/update', methods=['GET', 'POST'])
@@ -120,7 +137,8 @@ def update(id):
         return render_template('update.html',
             title='Flask MySQL',
             message='register',
-            post=post
+            post=post,
+            user=current_user
         )
     else:
         post.title = request.form.get('title')
@@ -146,7 +164,8 @@ def users():
             return render_template('users.html',
                 title='Flask Index',
                 message='Users (admin)',
-                users=users
+                users=users,
+                user=current_user
             )
         if request.method == 'POST':
             # TODO: implement here.
@@ -159,7 +178,8 @@ def forbidden_access():
     if request.method == 'GET':
         return render_template('forbidden_access.html',
             title='Flask Index',
-            message=''
+            message='',
+            user=current_user
         )
 
 # Main function is called only when executing ”python app.py”

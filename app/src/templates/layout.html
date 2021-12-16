@@ -79,6 +79,16 @@
                             user: None(not signed in)
                         {% endif %}
                     </div>
+                    {% if user %}
+                    <div class="list-group-item list-group-item-action">
+                        <a href="/edit_user" style="color:black; text-decoration: none;">Update Password</a>
+                    </div>
+                        {% if user.admin == True %}
+                        <div class="list-group-item list-group-item-action">
+                            <a href="/admin/users" style="color:black; text-decoration: none;">users(admin access)</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
                     <div class="list-group-item list-group-item-action">
                         <a href="/logout"  style="color:black; text-decoration: none;">Log Out</a>
                     </div>
@@ -99,8 +109,6 @@
 
         <footer>
             <div class="text-end">
-                <a href="/admin/users">users(admin access)</a>
-                <br>
                 <a href="/">Back to Index</a>
                 <br>
                 <br>

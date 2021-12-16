@@ -28,3 +28,38 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) DEFAULT CHARSET=utf8mb3;
+
+--
+-- Table structure for table `todo-list`
+--
+
+DROP TABLE IF EXISTS `todo-list`;
+CREATE TABLE `todo-list` (
+  `todolist-id` int NOT NULL AUTO_INCREMENT,
+  `listname` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`todolist-id`),
+  UNIQUE KEY `listname` (`listname`)
+) DEFAULT CHARSET=utf8mb3;
+
+--
+-- Table structure for table `permission`
+--
+
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission` (
+  `user-id` int NOT NULL,
+  `todolist-id` int NOT NULL,
+  PRIMARY KEY (`user-id`, `todolist-id`),
+) DEFAULT CHARSET=utf8mb3;
+
+--
+-- Table structure for table `todo-item`
+--
+
+DROP TABLE IF EXISTS `todo-item`;
+CREATE TABLE `todo-item` (
+  `item-id` int NOT NULL AUTO_INCREMENT,
+  `itemname` varchar(30) DEFAULT NULL,
+  `todolist-id` int NOT NULL,
+  PRIMARY KEY (`item-id`)
+) DEFAULT CHARSET=utf8mb3;

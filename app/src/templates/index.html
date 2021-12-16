@@ -9,22 +9,39 @@ Flask Tutorial
 {% endblock %}
 
 {% block content %}
-<p>{{ message }}</p>
 <div>
     <h1>Index</h1>
-    <a href="/create" role="button">Register</a>
+    <p>{{ message }}</p>
 </div>
 <div>
-    <h1>Table: posts</h1>
-    {% for post in posts %}
-    <article>
-        <h2>{{ post.title }}</h2>
-        <a href="/{{post.id}}/update" role="button">Edit</a>
-        <a href="/{{post.id}}/delete" role="button">Delete</a>
-        <p>created at: {{ post.created_at }}</p>
-        <p>{{ post.body }}</p>
-    </article>
-    {% endfor %}
+    <h2>Table: posts</h2>
+    <a class="btn btn-primary" href="/create" role="button">Register</a>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Created at</th>
+                  <th scope="col">Body</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <th scope="row">{{ post.id }}</th>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.created_at }}</td>
+                    <td>{{ post.body }}</td>
+                    <td><a class="btn btn-primary" href="/{{post.id}}/update" role="button">Edit</a></td>
+                    <td><a class="btn btn-danger" href="/{{post.id}}/delete" role="button">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %} 
 
