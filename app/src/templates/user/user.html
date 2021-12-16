@@ -16,7 +16,23 @@
 </div>
 <!-- Permission Table -->
 <div>
-    <!-- TODO: implement here -->
+    <h2>Accessible TodoLists</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Listname</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todolist in accessible_todolists %}
+            <tr>
+                <th scope="row">{{ todolist.todolist_id }}</th>
+                <td>{{ todolist.listname }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %} 
 

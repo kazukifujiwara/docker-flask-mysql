@@ -14,6 +14,15 @@ Flask Tutorial
     <p>{{ message }}</p>
 </div>
 <div>
+    <h2>Select TodoList</h2>
+    <ul>
+        {% for todolist in todolists %}
+        <li><a href="/todolist/{{ todolist.todolist_id }}">{{ todolist.listname }}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+<div>   
     <h2>Table: posts</h2>
     <a class="btn btn-primary" href="/create" role="button">Register</a>
     <div>

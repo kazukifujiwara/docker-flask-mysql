@@ -1,5 +1,5 @@
 """
-This is a admin module called by app.py
+This is a user module called by app.py
 """
 from flask import Blueprint, render_template, request, redirect
 from flask_login import login_required, current_user
@@ -18,11 +18,16 @@ def user(id):
     if int(id) == current_user.id:
         if request.method == 'GET':
             user = User.query.get(id)
+            r = db.session.query(Permission.user_id, Permission.todolist_id, TodoList.listname)\
+                    .filter(Permission.user_id == int(id))\
+                    .outerjoin(TodoList, Permission.todolist_id == TodoList.todolist_id).all()
+
             return render_template('user/user.html',
                 title='Flask Index',
                 message=f'User: {user.id}',
                 user=current_user,
-                userinfo = user
+                userinfo = user,
+                accessible_todolists = r
             )
         if request.method == 'POST':
             # TODO: implement here.

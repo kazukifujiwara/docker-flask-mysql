@@ -113,6 +113,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 * DatabaseのCRUD操作をAPI経由で実行可能にする
 * [Flask(jinja2) + vue.js でmustache記法( {{ }} )の衝突回避](https://blog.hysakhr.com/2019/09/14/flaskjinja2-vue-js-%E3%81%A7mustache%E8%A8%98%E6%B3%95-%E3%81%AE%E8%A1%9D%E7%AA%81%E5%9B%9E%E9%81%BF/)
 * 初回起動時にadmin userを作成する。
+* TodoItem の実装
+* CreateTodoList (User ver.)の実装
 
 ## Referenece
 

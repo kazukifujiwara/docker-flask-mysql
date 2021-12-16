@@ -16,6 +16,7 @@ from models.todo_item import TodoItem
 # import blueprints
 from view.admin import admin_bp
 from view.user import user_bp
+from view.todolist import todolist_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
@@ -32,6 +33,7 @@ login_manager.init_app(app)
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(todolist_bp)
 
 # import user's information
 @login_manager.user_loader
@@ -45,15 +47,20 @@ def unauthorized():
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    username = current_user.username
+
+    r = db.session.query(Permission.user_id, Permission.todolist_id, TodoList.listname)\
+            .filter(Permission.user_id == current_user.id)\
+            .outerjoin(TodoList, Permission.todolist_id == TodoList.todolist_id).all()
+
     if request.method == 'GET':
         posts = Post.query.all()
-    return render_template('index.html',
-        title='Flask Index',
-        message=f'Hello, {username}.',
-        posts=posts,
-        user=current_user
-    )
+        return render_template('index.html',
+            title='Flask Index',
+            message=f'Hello, {current_user.username}.',
+            posts=posts,
+            user=current_user,
+            todolists=r
+        )
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

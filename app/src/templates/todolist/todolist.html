@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<p><h1>{{ message }}</h1></p>
+<div>
+    <span>TodoList ID: {{ todolist.todolist_id }}</span>
+    <br>
+    <span>TodoList Name: {{ todolist.listname }}</span>
+</div>
+
+<!-- TodoItem Table -->
+<div>
+    TodoItem Table hasn't been implemented.
+</div>
+{% endblock %} 
+
+{% block footer %}
+copyright 2021 Kazuki Fujiwara
+{% endblock %} 
