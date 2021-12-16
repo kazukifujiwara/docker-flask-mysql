@@ -50,7 +50,8 @@ def index():
     return render_template('index.html',
         title='Flask Index',
         message=f'Hello, {username}.',
-        posts=posts
+        posts=posts,
+        user=current_user
     )
 
 @app.route('/signup', methods=['GET', 'POST'])
