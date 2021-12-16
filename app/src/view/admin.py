@@ -52,7 +52,7 @@ def todolists():
 def create_todolist():
     if current_user.admin:
         if request.method == 'GET':
-            return render_template('admin/create_todolist.html',
+            return render_template('user/create_todolist.html',
             title='Flask MySQL',
             message='Create TodoList',
             user=current_user

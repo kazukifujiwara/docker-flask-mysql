@@ -15,12 +15,13 @@ Flask Tutorial
 </div>
 <div>
     <h2>Select TodoList</h2>
+    <a class="btn btn-primary" href="/user/{{ user.id }}/create_todolist" role="button">Create TodoList</a>
+    <br>
     <ul>
         {% for todolist in todolists %}
         <li><a href="/todolist/{{ todolist.todolist_id }}">{{ todolist.listname }}</a></li>
         {% endfor %}
     </ul>
-
 </div>
 <div>   
     <h2>Table: posts</h2>

@@ -53,4 +53,31 @@ def update(id):
             return redirect('/')
     else:
         return redirect('/forbidden_access')
-    
+
+@user_bp.route('/<id>/create_todolist', methods=['GET', 'POST'])
+@login_required
+def create_todolist(id):
+    if int(id) == current_user.id:
+        if request.method == 'GET':
+            return render_template('user/create_todolist.html',
+            title='Flask MySQL',
+            message='Create TodoList',
+            user=current_user
+        )
+        if request.method == 'POST':
+            listname = request.form.get('listname')
+
+            # create todolist
+            todolist = TodoList(listname=listname)
+            db.session.add(todolist)
+            db.session.commit()
+
+            # create permission
+            todolist = TodoList.query.filter_by(listname=listname).first()            
+            permission = Permission(user_id=id, todolist_id=todolist.todolist_id)
+            db.session.add(permission)
+            db.session.commit()
+
+            return redirect('/')
+    else:
+        return redirect('/forbidden_access')

@@ -115,6 +115,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 * 初回起動時にadmin userを作成する。
 * TodoItem の実装
 * CreateTodoList (User ver.)の実装
+* admin_access, user_access を decorator で実装する
 
 ## Referenece
 
