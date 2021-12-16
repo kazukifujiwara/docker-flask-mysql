@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flask Tutorial
+{% endblock %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>Create Permission</h1>
+<form method="POST">
+    <label for="user_id">User ID</label>
+    <input type="text" name="user_id">
+    <label for="todolist_id">TodoList ID</label>
+    <input type="text" name="todolist_id">
+    <input type="submit" value="Create">
+</form>
+
+<!-- Permission Table -->
+<div>
+    <h2>Permission Table</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">User ID</th>
+              <th scope="col">List ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for permission in permissions %}
+            <tr>
+                <th scope="row">{{ permission.user_id }}</th>
+                <td>{{ permission.todolist_id }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- User Table -->
+<div>
+    <h2>User Table</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Password(SHA256)</th>
+              <th scope="col">admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.admin }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- TodoList Table -->
+<div>
+    <h2>TodoList Table</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Listname</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todolist in todolists %}
+            <tr>
+                <th scope="row">{{ todolist.todolist_id }}</th>
+                <td>{{ todolist.listname }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 
+
+{% block footer %}
+copyright 2021 Kazuki Fujiwara
+{% endblock %} 

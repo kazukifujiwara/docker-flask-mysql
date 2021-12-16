@@ -30,14 +30,14 @@ CREATE TABLE `user` (
 ) DEFAULT CHARSET=utf8mb3;
 
 --
--- Table structure for table `todo-list`
+-- Table structure for table `todo_list`
 --
 
-DROP TABLE IF EXISTS `todo-list`;
-CREATE TABLE `todo-list` (
-  `todolist-id` int NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `todo_list`;
+CREATE TABLE `todo_list` (
+  `todolist_id` int NOT NULL AUTO_INCREMENT,
   `listname` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`todolist-id`),
+  PRIMARY KEY (`todolist_id`),
   UNIQUE KEY `listname` (`listname`)
 ) DEFAULT CHARSET=utf8mb3;
 
@@ -47,19 +47,25 @@ CREATE TABLE `todo-list` (
 
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
-  `user-id` int NOT NULL,
-  `todolist-id` int NOT NULL,
-  PRIMARY KEY (`user-id`, `todolist-id`),
+  `user_id` int NOT NULL,
+  `todolist_id` int NOT NULL,
+  PRIMARY KEY (`user_id`, `todolist_id`),
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (todolist_id) REFERENCES todo_list(todolist_id)
 ) DEFAULT CHARSET=utf8mb3;
 
 --
--- Table structure for table `todo-item`
+-- Table structure for table `todo_item`
 --
 
-DROP TABLE IF EXISTS `todo-item`;
-CREATE TABLE `todo-item` (
-  `item-id` int NOT NULL AUTO_INCREMENT,
-  `itemname` varchar(30) DEFAULT NULL,
-  `todolist-id` int NOT NULL,
-  PRIMARY KEY (`item-id`)
+DROP TABLE IF EXISTS `todo_item`;
+CREATE TABLE `todo_item` (
+  `task_id` int NOT NULL AUTO_INCREMENT,
+  `taskname` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `detail` varchar(200) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `todolist_id` int NOT NULL,
+  PRIMARY KEY (`task_id`),
+  FOREIGN KEY (todolist_id) REFERENCES todo_list(todolist_id)
 ) DEFAULT CHARSET=utf8mb3;

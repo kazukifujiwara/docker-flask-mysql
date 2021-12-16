@@ -4,7 +4,17 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-import pytz
+
+
+from db import db
+from models.user import User
+from models.post import Post
+from models.todo_list import TodoList
+from models.permission import Permission
+from models.todo_item import TodoItem
+
+# import blueprints
+from view.admin import admin_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
@@ -14,23 +24,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host
     'dbname': 'testdb'
 })
 app.config['SECRET_KEY'] =  os.urandom(24)
-db = SQLAlchemy(app)
+db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    body = db.Column(db.String(300), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False,
-                    default=datetime.now(pytz.timezone('Asia/Tokyo')))
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(100))
-    admin = db.Column(db.Boolean, default=False, nullable=False)
+app.register_blueprint(admin_bp)
 
 # import user's information
 @login_manager.user_loader
@@ -154,24 +153,24 @@ def delete(id):
     db.session.commit()
     return redirect('/')
 
-@app.route('/admin/users', methods=['GET', 'POST'])
-@login_required
-def users():
-    # TODO: check admin flag in userdb
-    if current_user.admin:
-        if request.method == 'GET':
-            users = User.query.all()
-            return render_template('users.html',
-                title='Flask Index',
-                message='Users (admin)',
-                users=users,
-                user=current_user
-            )
-        if request.method == 'POST':
-            # TODO: implement here.
-            pass
-    else:
-        return redirect('/forbidden_access')
+# @app.route('/admin/users', methods=['GET', 'POST'])
+# @login_required
+# def users():
+#     # TODO: check admin flag in userdb
+#     if current_user.admin:
+#         if request.method == 'GET':
+#             users = User.query.all()
+#             return render_template('users.html',
+#                 title='Flask Index',
+#                 message='Users (admin)',
+#                 users=users,
+#                 user=current_user
+#             )
+#         if request.method == 'POST':
+#             # TODO: implement here.
+#             pass
+#     else:
+#         return redirect('/forbidden_access')
 
 @app.route('/forbidden_access', methods=['GET'])
 def forbidden_access():

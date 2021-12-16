@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flask Tutorial
+{% endblock %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>Create TodoList</h1>
+<form method="POST">
+    <label for="listname">Listname</label>
+    <input type="text" name="listname">
+    <input type="submit" value="Create">
+</form>
+{% endblock %} 
+
+{% block footer %}
+copyright 2021 Kazuki Fujiwara
+{% endblock %} 
