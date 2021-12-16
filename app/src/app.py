@@ -15,6 +15,7 @@ from models.todo_item import TodoItem
 
 # import blueprints
 from view.admin import admin_bp
+from view.user import user_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
@@ -30,6 +31,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 app.register_blueprint(admin_bp)
+app.register_blueprint(user_bp)
 
 # import user's information
 @login_manager.user_loader
@@ -95,21 +97,21 @@ def logout():
     logout_user()
     return redirect('/login')
 
-@app.route('/edit_user', methods=['GET', 'POST'])
-def edit_user():
-    if request.method == 'GET':
-        # user = User.query.filter_by(username=username).first()
-        return render_template('edit_user.html',
-            title='Edit User',
-            message=f'Edit user: {current_user.username}',
-            user=current_user
-        )
-    else:
-        user = User.query.filter_by(username=current_user.username).first()
-        password = request.form.get('password')
-        user.password = generate_password_hash(password, method='sha256')
-        db.session.commit()
-        return redirect('/')
+# @app.route('/edit_user', methods=['GET', 'POST'])
+# def edit_user():
+#     if request.method == 'GET':
+#         # user = User.query.filter_by(username=username).first()
+#         return render_template('edit_user.html',
+#             title='Edit User',
+#             message=f'Edit user: {current_user.username}',
+#             user=current_user
+#         )
+#     else:
+#         user = User.query.filter_by(username=current_user.username).first()
+#         password = request.form.get('password')
+#         user.password = generate_password_hash(password, method='sha256')
+#         db.session.commit()
+#         return redirect('/')
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required

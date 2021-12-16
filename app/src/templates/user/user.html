@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<p><h1>{{ message }}</h1></p>
+<div>
+    <span>Hello, {{ userinfo.username }}</span>
+    <br>
+    <a class="btn btn-primary" href="/user/{{ userinfo.id }}/update" role="button">Update User Settings</a>
+</div>
+<!-- Permission Table -->
+<div>
+    <!-- TODO: implement here -->
+</div>
+{% endblock %} 
+
+{% block footer %}
+copyright 2021 Kazuki Fujiwara
+{% endblock %} 

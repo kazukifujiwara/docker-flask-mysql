@@ -81,7 +81,7 @@
                     </div>
                     {% if user %}
                     <div class="list-group-item list-group-item-action">
-                        <a href="/edit_user" style="color:black; text-decoration: none;">Update Password</a>
+                        <a href="/user/{{ user.id }}" style="color:black; text-decoration: none;">User Setting</a>
                     </div>
                         {% if user.admin == True %}
                         <div class="list-group-item list-group-item-action">

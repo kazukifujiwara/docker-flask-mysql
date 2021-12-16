@@ -17,7 +17,7 @@ def users():
     if current_user.admin:
         if request.method == 'GET':
             users = User.query.all()
-            return render_template('users.html',
+            return render_template('admin/users.html',
                 title='Flask Index',
                 message='Users (admin)',
                 users=users,
@@ -35,7 +35,7 @@ def todolists():
     if current_user.admin:
         if request.method == 'GET':
             todolists = TodoList.query.all()
-            return render_template('todolists.html',
+            return render_template('admin/todolists.html',
                 title='Flask Index',
                 message='TodoLists (admin)',
                 todolists=todolists,
@@ -52,7 +52,7 @@ def todolists():
 def create_todolist():
     if current_user.admin:
         if request.method == 'GET':
-            return render_template('create_todolist.html',
+            return render_template('admin/create_todolist.html',
             title='Flask MySQL',
             message='Create TodoList',
             user=current_user
@@ -72,7 +72,7 @@ def permission():
     if current_user.admin:
         if request.method == 'GET':
             permission = Permission.query.all()
-            return render_template('permission.html',
+            return render_template('admin/permission.html',
                 title='Flask Index',
                 message='TodoLists (admin)',
                 permissions=permission,
@@ -93,7 +93,7 @@ def create_permission():
             permission = Permission.query.all()
             users = User.query.all()
             todolists = TodoList.query.all()
-            return render_template('create_permission.html',
+            return render_template('admin/create_permission.html',
                 title='Flask MySQL',
                 message='Create Permission',
                 user=current_user,
