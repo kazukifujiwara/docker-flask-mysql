@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(100))
-
+    admin = db.Column(db.Boolean, default=False, nullable=False)
 
 # import user's information
 @login_manager.user_loader
@@ -139,7 +139,7 @@ def delete(id):
 @login_required
 def users():
     # TODO: check admin flag in userdb
-    if current_user.username == 'admin':
+    if current_user.admin:
         if request.method == 'GET':
             users = User.query.all()
             return render_template('users.html',
