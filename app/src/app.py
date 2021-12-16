@@ -31,6 +31,7 @@ db.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# register blueprints
 app.register_blueprint(admin_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(todolist_bp)
@@ -104,22 +105,6 @@ def logout():
     logout_user()
     return redirect('/login')
 
-# @app.route('/edit_user', methods=['GET', 'POST'])
-# def edit_user():
-#     if request.method == 'GET':
-#         # user = User.query.filter_by(username=username).first()
-#         return render_template('edit_user.html',
-#             title='Edit User',
-#             message=f'Edit user: {current_user.username}',
-#             user=current_user
-#         )
-#     else:
-#         user = User.query.filter_by(username=current_user.username).first()
-#         password = request.form.get('password')
-#         user.password = generate_password_hash(password, method='sha256')
-#         db.session.commit()
-#         return redirect('/')
-
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -161,25 +146,6 @@ def delete(id):
     db.session.delete(post)
     db.session.commit()
     return redirect('/')
-
-# @app.route('/admin/users', methods=['GET', 'POST'])
-# @login_required
-# def users():
-#     # TODO: check admin flag in userdb
-#     if current_user.admin:
-#         if request.method == 'GET':
-#             users = User.query.all()
-#             return render_template('users.html',
-#                 title='Flask Index',
-#                 message='Users (admin)',
-#                 users=users,
-#                 user=current_user
-#             )
-#         if request.method == 'POST':
-#             # TODO: implement here.
-#             pass
-#     else:
-#         return redirect('/forbidden_access')
 
 @app.route('/forbidden_access', methods=['GET'])
 def forbidden_access():
