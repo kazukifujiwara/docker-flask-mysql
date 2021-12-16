@@ -102,6 +102,7 @@ Type "help", "copyright", "credits" or "license" for more information.
     * adminユーザフラグの追加
 * 右上にユーザ設定メニューを作る
 * DatabaseのCRUD操作をAPI経由で実行可能にする
+* [Flask(jinja2) + vue.js でmustache記法( {{ }} )の衝突回避](https://blog.hysakhr.com/2019/09/14/flaskjinja2-vue-js-%E3%81%A7mustache%E8%A8%98%E6%B3%95-%E3%81%AE%E8%A1%9D%E7%AA%81%E5%9B%9E%E9%81%BF/)
 
 ## Referenece
 
@@ -110,3 +111,4 @@ Type "help", "copyright", "credits" or "license" for more information.
     * my.cnf の設定を変更した。
 * [【docker】db:createすると、Plugin caching_sha2_password could not be loaded...のエラーハマった話](https://qiita.com/tomo-IR/items/224d33f14561e759dd16)
 * [Flaskで簡易ブログアプリの作成！データベース操作も~Flask超入門 vol.2~](https://www.youtube.com/watch?v=mW0_60SRr3s)
+* [ログイン中のユーザ情報の取得](https://www.osstech.co.jp/~hamano/posts/flask-login-ldap/)

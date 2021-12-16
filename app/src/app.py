@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -44,11 +44,12 @@ def unauthorized():
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    username = current_user.username
     if request.method == 'GET':
         posts = Post.query.all()
     return render_template('index.html',
         title='Flask Index',
-        message='Index',
+        message=f'Hello, {username}.',
         posts=posts
     )
 
@@ -137,16 +138,20 @@ def delete(id):
 @app.route('/admin/users', methods=['GET', 'POST'])
 @login_required
 def users():
-    if request.method == 'GET':
-        users = User.query.all()
-        return render_template('users.html',
-            title='Flask Index',
-            message='Users (admin)',
-            users=users
-        )
-    if request.method == 'POST':
-        # TODO: implement here.
-        pass
+    # TODO: check admin flag in userdb
+    if current_user.username == 'admin':
+        if request.method == 'GET':
+            users = User.query.all()
+            return render_template('users.html',
+                title='Flask Index',
+                message='Users (admin)',
+                users=users
+            )
+        if request.method == 'POST':
+            # TODO: implement here.
+            pass
+    else:
+        return redirect('/forbidden_access')
 
 @app.route('/forbidden_access', methods=['GET'])
 def forbidden_access():
