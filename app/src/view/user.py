@@ -3,6 +3,7 @@ This is a user module called by app.py
 """
 from flask import Blueprint, render_template, request, redirect
 from flask_login import login_required, current_user
+from typing import List, Dict, Optional
 from werkzeug.security import generate_password_hash
 
 from db import db
@@ -47,7 +48,7 @@ def update(id):
             )
         else:
             user = User.query.filter_by(username=current_user.username).first()
-            password = request.form.get('password')
+            password: str = request.form.get('password')
             user.password = generate_password_hash(password, method='sha256')
             db.session.commit()
             return redirect('/')
@@ -65,7 +66,7 @@ def create_todolist(id):
             user=current_user
         )
         if request.method == 'POST':
-            listname = request.form.get('listname')
+            listname: str = request.form.get('listname')
 
             # create todolist
             todolist = TodoList(listname=listname)

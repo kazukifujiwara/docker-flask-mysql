@@ -1,10 +1,11 @@
+import os
+
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
+from typing import List, Dict, Optional
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
-
 
 from db import db
 from models.user import User
@@ -18,7 +19,7 @@ from view.admin import admin_bp
 from view.user import user_bp
 from view.todolist import todolist_bp
 
-app = Flask(__name__)
+app: Flask = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
     'user': 'root',
     'password': 'root',
@@ -28,7 +29,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{user}:{password}@{host
 app.config['SECRET_KEY'] =  os.urandom(24)
 db.init_app(app)
 
-login_manager = LoginManager()
+login_manager: LoginManager = LoginManager()
 login_manager.init_app(app)
 
 # register blueprints
@@ -38,7 +39,7 @@ app.register_blueprint(todolist_bp)
 
 # import user's information
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: str) -> Optional[User]:
     return User.query.get(int(user_id))
 
 @login_manager.unauthorized_handler
@@ -54,7 +55,7 @@ def index():
             .outerjoin(TodoList, Permission.todolist_id == TodoList.todolist_id).all()
 
     if request.method == 'GET':
-        posts = Post.query.all()
+        posts: List[Post] = Post.query.all()
         return render_template('index.html',
             title='Flask Index',
             message=f'Hello, {current_user.username}.',
@@ -66,8 +67,8 @@ def index():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username: str = request.form.get('username')
+        password: str = request.form.get('password')
         user = User(username=username, password=generate_password_hash(password, method='sha256')) 
         db.session.add(user)
         db.session.commit()
@@ -81,11 +82,11 @@ def signup():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
+        username: str = request.form.get('username')
+        password: str = request.form.get('password')
+
         #use the first result if there is username's dupurication
-        user = User.query.filter_by(username=username).first()
+        user: User = User.query.filter_by(username=username).first()
 
         # TODO: implement if username is not found.
 
@@ -104,6 +105,18 @@ def login():
 def logout():
     logout_user()
     return redirect('/login')
+
+@app.route('/forbidden_access', methods=['GET'])
+def forbidden_access():
+    if request.method == 'GET':
+        return render_template('forbidden_access.html',
+            title='Flask Index',
+            message='',
+            user=current_user
+        )
+
+
+## Start: temporary settings for POST CRUD
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -147,14 +160,8 @@ def delete(id):
     db.session.commit()
     return redirect('/')
 
-@app.route('/forbidden_access', methods=['GET'])
-def forbidden_access():
-    if request.method == 'GET':
-        return render_template('forbidden_access.html',
-            title='Flask Index',
-            message='',
-            user=current_user
-        )
+## End: temporary settings for POST CRUD
+
 
 # Main function is called only when executing ”python app.py”
 if __name__ == '__main__':

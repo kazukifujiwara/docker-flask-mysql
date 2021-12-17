@@ -3,6 +3,7 @@ This is a admin module called by app.py
 """
 from flask import Blueprint, render_template, request, redirect
 from flask_login import login_required, current_user
+from typing import List, Dict, Optional
 
 from db import db
 from models.user import User
@@ -16,7 +17,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 def users():
     if current_user.admin:
         if request.method == 'GET':
-            users = User.query.all()
+            users: List[User] = User.query.all()
             return render_template('admin/users.html',
                 title='Flask Index',
                 message='Users (admin)',
@@ -34,7 +35,7 @@ def users():
 def todolists():
     if current_user.admin:
         if request.method == 'GET':
-            todolists = TodoList.query.all()
+            todolists: List[TodoList] = TodoList.query.all()
             return render_template('admin/todolists.html',
                 title='Flask Index',
                 message='TodoLists (admin)',
@@ -58,7 +59,7 @@ def create_todolist():
             user=current_user
         )
         if request.method == 'POST':
-            listname = request.form.get('listname')
+            listname: str = request.form.get('listname')
             todolist = TodoList(listname=listname)
             db.session.add(todolist)
             db.session.commit()
@@ -71,7 +72,7 @@ def create_todolist():
 def permission():
     if current_user.admin:
         if request.method == 'GET':
-            permission = Permission.query.all()
+            permission: List[Permission] = Permission.query.all()
             return render_template('admin/permission.html',
                 title='Flask Index',
                 message='TodoLists (admin)',
@@ -90,9 +91,9 @@ def permission():
 def create_permission():
     if current_user.admin:
         if request.method == 'GET':
-            permission = Permission.query.all()
-            users = User.query.all()
-            todolists = TodoList.query.all()
+            permission: List[Permission] = Permission.query.all()
+            users: List[User] = User.query.all()
+            todolists: List[TodoList] = TodoList.query.all()
             return render_template('admin/create_permission.html',
                 title='Flask MySQL',
                 message='Create Permission',
