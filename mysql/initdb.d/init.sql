@@ -60,7 +60,7 @@ CREATE TABLE `permission` (
 
 DROP TABLE IF EXISTS `todo_item`;
 CREATE TABLE `todo_item` (
-  `task_id` int NOT NULL AUTO_INCREMENT,
+  `task_id` varchar(36) NOT NULL,
   `taskname` varchar(30) DEFAULT NULL,
   `status` varchar(30) DEFAULT NULL,
   `detail` varchar(200) DEFAULT NULL,

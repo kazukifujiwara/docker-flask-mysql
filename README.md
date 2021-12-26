@@ -17,6 +17,7 @@ app_mysql                "docker-entrypoint.s…"   3306/tcp, 33060/tcp   app_my
 docker exec -it app_mysql /bin/bash
 mysql -uroot -p
 (enter password: root(default))
+use testdb;
 update user set admin=true where username="admin";
 ```
 
